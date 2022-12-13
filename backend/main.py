@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from model import Bin
+from model import Entry
 
 app = FastAPI()
 
