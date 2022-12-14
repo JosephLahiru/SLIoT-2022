@@ -33,8 +33,8 @@ function App(){
     })
   });
 
-  const output = entryList.reduce((prevValue, { id, value }) => {
-    prevValue[id] = typeof value === "string" ? JSON.parse(value) : value
+  const output = entryList.reduce((prevValue, { date, value }) => {
+    prevValue[date] = typeof value === "string" ? JSON.parse(value) : value
     return prevValue;
 }, {});
 
@@ -60,14 +60,16 @@ console.log(output);
   return(
     <div className='App'>
       <h1>Hello World</h1>
-      <div style={
-            {padding: '20px', width: '70%'}
-          }>
-        <Bar
-          data={data}
-          options={options}
-        ></Bar>
-      </div>
+      <center>
+        <div style={
+              {padding: '20px', width: '70%'}
+            }>
+          <Bar
+            data={data}
+            options={options}
+          ></Bar>
+        </div>
+      </center>
     </div>
   )
 }
