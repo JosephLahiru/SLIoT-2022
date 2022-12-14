@@ -17,16 +17,16 @@ function LogIn() {
 
   const userCollectionRef = collection(db, "user");
 
-  useEffect(() =>{
-    const getUser = async () => {
-      const _data_ = await getDocs(userCollectionRef);
-      setUserList(_data_.docs.map((doc) => ({ ...doc.data(), id:doc.id})));
-    }
+//   useEffect(() =>{
+//     const getUser = async () => {
+//       const _data_ = await getDocs(userCollectionRef);
+//       setUserList(_data_.docs.map((doc) => ({ ...doc.data(), id:doc.id})));
+//     }
 
-    getUser();
-  })
+//     getUser();
+//   })
 
-  console.log(userList);
+//   console.log(userList);
   
   const authenticateUser = async () => {
     auth.login(email);
