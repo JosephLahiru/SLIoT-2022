@@ -1,6 +1,7 @@
 import './../App.css';
 import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Chart as ChartJS,
@@ -15,6 +16,7 @@ import {Bar} from 'react-chartjs-2';
 
 import {db} from './../firebase-config';
 import {collection, getDocs} from 'firebase/firestore';
+import { useAuth } from './auth';
 
 ChartJS.register(
   BarElement,
@@ -27,10 +29,11 @@ ChartJS.register(
 function Home(){
 
   const [entryList, setEntryList] = useState([{}]);
-  const [userList, setUserList] = useState([{}]);
 
   const entryCollectionRef = collection(db, "entry");
-  const userCollectionRef = collection(db, "user");
+
+  const auth = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() =>{
     const getEntry = async () => {
@@ -39,15 +42,6 @@ function Home(){
     }
 
     getEntry();
-  })
-
-  useEffect(() =>{
-    const getUser = async () => {
-      const _data_ = await getDocs(userCollectionRef);
-      setUserList(_data_.docs.map((doc) => ({ ...doc.data(), id:doc.id})));
-    }
-
-    getUser();
   })
 
   const output_max_voltage = entryList.reduce((prevValue, { date, DayMaxVoltage }) => {
@@ -108,13 +102,19 @@ const power_factor = entryList.reduce((prevValue, { date, powerFactor }) => {
 
   };
 
+  const handleLogout = () =>{
+    auth.logout();
+    navigate('login');
+  }
+
   return(
     <div className='App list-group-item justify-content-center
     aligh-items-center mx-auto' style={{"width":"70%",
     "backgroundColor":"white", "marginTop":"15px"}}>
       <h1>ELECTRO APP</h1>
-      <center>
-        
+        <h3>Welcome {auth.user}</h3>
+        <button onClick={handleLogout} className="mb-5">Logout</button>
+      <center>  
         <div style={
               {padding: '20px'}
             }>
@@ -122,16 +122,19 @@ const power_factor = entryList.reduce((prevValue, { date, powerFactor }) => {
           <Bar
             data={max_vol_data}
             options={options}
+            className="mb-4"
           ></Bar>
           <h3>Total Power</h3>
             <Bar
             data={tot_pow_data}
             options={options}
+            className="mb-4"
           ></Bar>
           <h3>Power Factor</h3>
             <Bar
             data={pow_fac_data}
             options={options}
+            className="mb-4"
           ></Bar>
         </div>
       </center>

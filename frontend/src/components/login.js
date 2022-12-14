@@ -5,12 +5,15 @@ import {Link, useNavigate} from 'react-router-dom';
 
 import {db} from './../firebase-config';
 import {collection, getDocs} from 'firebase/firestore';
+import { useAuth } from './auth';
 
 function LogIn() {
 
   const [userList, setUserList] = useState([{}]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const auth = useAuth();
+  const navigate = useNavigate();
 
   const userCollectionRef = collection(db, "user");
 
@@ -22,9 +25,12 @@ function LogIn() {
 
     getUser();
   })
+
+  console.log(userList);
   
   const authenticateUser = async () => {
-    
+    auth.login(email);
+    navigate('/', {replace:true});
   };
 
   return (
