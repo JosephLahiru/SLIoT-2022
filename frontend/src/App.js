@@ -1,50 +1,77 @@
-import React, { Component, useState, useEffect } from 'react';
-import CanvasJSReact from './components/canvasjs.react';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.css';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+import {
+  Chart as ChartJS,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+} from 'chart.js';
 
- 
-class App extends Component {	
-	render() {
-		const options = {
-			animationEnabled: true,
-			exportEnabled: true,
-			theme: "dark1",
-			title:{
-				text: "Simple Column Chart with Index Labels"
-			},
-			axisY: {
-				includeZero: true
-			},
-			data: [{
-				type: "column",
-				indexLabelFontColor: "#5A5757",
-				indexLabelPlacement: "outside",
-				dataPoints: [
-					{ x: 10, y: 71 },
-					{ x: 20, y: 55 },
-					{ x: 30, y: 50 },
-					{ x: 40, y: 65 },
-					{ x: 50, y: 71 },
-					{ x: 60, y: 68 },
-					{ x: 70, y: 38 },
-					{ x: 80, y: 92},
-				]
-			}]
-		}
-		
-		return (
-		<div className='App list-group-item justify-content-center
-    aligh-items-center mx-auto' style={{"width":"70%",
-    "backgroundColor":"white", "marginTop":"15px"}}>
-			<CanvasJSChart options = {options}
-			/>
-		</div>
-		);
-	}
+import {Bar} from 'react-chartjs-2';
+
+ChartJS.register(
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Tooltip,
+  Legend
+)
+
+function App(){
+
+  const [entryList, setEntryList] = useState([{}])
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/entry')
+    .then(res =>{
+      setEntryList(res.data)
+    })
+  });
+
+  const output = entryList.reduce((prevValue, { date, value }) => {
+    prevValue[date] = typeof value === "string" ? JSON.parse(value) : value
+    return prevValue;
+}, {});
+
+console.log(output);
+
+  const data={
+    labels: Object.keys(output),
+    datasets: [
+      {
+        label: 'Electricity Usage',
+        data: Object.values(output),
+        backgroundColor: 'aqua',
+        borderColor: 'black',
+        borderWidth: 1,
+      }
+    ]
+  };
+
+  const options={
+
+  };
+
+  return(
+    <div className='App'>
+      <h1>Hello World</h1>
+      <center>
+        <div style={
+              {padding: '20px', width: '70%'}
+            }>
+          <Bar
+            data={data}
+            options={options}
+          ></Bar>
+        </div>
+      </center>
+    </div>
+  )
 }
- 
+
 export default App;
