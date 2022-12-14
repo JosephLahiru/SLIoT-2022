@@ -27,7 +27,10 @@ ChartJS.register(
 function App(){
 
   const [entryList, setEntryList] = useState([{}]);
+  const [userList, setUserList] = useState([{}]);
+
   const entryCollectionRef = collection(db, "entry");
+  const userCollectionRef = collection(db, "user");
 
   useEffect(() =>{
     const getEntry = async () => {
@@ -36,6 +39,15 @@ function App(){
     }
 
     getEntry();
+  })
+
+  useEffect(() =>{
+    const getUser = async () => {
+      const _data_ = await getDocs(userCollectionRef);
+      setUserList(_data_.docs.map((doc) => ({ ...doc.data(), id:doc.id})));
+    }
+
+    getUser();
   })
 
   const output_max_voltage = entryList.reduce((prevValue, { date, DayMaxVoltage }) => {
