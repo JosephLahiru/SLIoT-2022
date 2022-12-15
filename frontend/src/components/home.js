@@ -42,7 +42,7 @@ function Home(){
     }
 
     getEntry();
-  })
+  },[])
 
   const output_max_voltage = entryList.reduce((prevValue, { date, DayMaxVoltage }) => {
     prevValue[date] = typeof DayMaxVoltage === "string" ? JSON.parse(DayMaxVoltage) : DayMaxVoltage

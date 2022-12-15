@@ -17,20 +17,36 @@ function LogIn() {
 
   const userCollectionRef = collection(db, "user");
 
-//   useEffect(() =>{
-//     const getUser = async () => {
-//       const _data_ = await getDocs(userCollectionRef);
-//       setUserList(_data_.docs.map((doc) => ({ ...doc.data(), id:doc.id})));
-//     }
+  auth.logout();
 
-//     getUser();
-//   })
+  useEffect(() =>{
+    const getUser = async () => {
+      const _data_ = await getDocs(userCollectionRef);
+      setUserList(_data_.docs.map((doc) => ({ ...doc.data(), id:doc.id})));
+    }
 
-//   console.log(userList);
-  
+    getUser();
+  },[])
+
+  const user_data = userList.reduce((prevValue, { email, password }) => {
+    prevValue[email] = typeof password === "string" ? JSON.parse(password) : password
+    return prevValue;
+}, {});
+
+const emails = Object.keys(user_data)
+const passwords = Object.values(user_data)
+
   const authenticateUser = async () => {
-    auth.login(email);
-    navigate('/', {replace:true});
+
+    for (let index = 0; index < emails.length; index++) {
+      if(emails[index]===email){
+        console.log(emails[index]);
+        if(passwords[index]==password){
+          auth.login(email);
+          navigate('/', {replace:true});
+        }
+      }
+    }
   };
 
   return (

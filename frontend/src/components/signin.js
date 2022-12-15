@@ -5,10 +5,14 @@ import {Link, useNavigate} from 'react-router-dom';
 
 import {db} from './../firebase-config';
 import {collection, getDocs, addDoc} from 'firebase/firestore';
+import { useAuth } from './auth';
 
 function SignUp() {
 
   const navigate = useNavigate();
+  const auth = useAuth();
+
+  auth.logout();
 
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
