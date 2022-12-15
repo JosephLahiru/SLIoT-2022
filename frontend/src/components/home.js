@@ -29,8 +29,10 @@ ChartJS.register(
 function Home(){
 
   const [entryList, setEntryList] = useState([{}]);
+  const [userList, setUserList] = useState([{}]);
 
   const entryCollectionRef = collection(db, "entry");
+  const userCollectionRef = collection(db, "user");
 
   const auth = useAuth();
   const navigate = useNavigate();
@@ -43,6 +45,36 @@ function Home(){
 
     getEntry();
   },[])
+
+  useEffect(() =>{
+    const getUser = async () => {
+      const _data_ = await getDocs(userCollectionRef);
+      setUserList(_data_.docs.map((doc) => ({ ...doc.data(), id:doc.id})));
+    }
+
+    getUser();
+  },[])
+
+  // console.log(userList)
+
+  const user_data = userList.reduce((prevValue, { email, fname }) => {
+    prevValue[email] = typeof fname === "string" ? fname : fname
+    return prevValue;
+}, {});
+
+  // console.log(user_data);
+
+  let current_user = "unknown";
+
+  const emails = Object.keys(user_data)
+  const usernames = Object.values(user_data)
+
+  for (let index = 0; index < emails.length; index++) {
+    if(emails[index]===auth.user){
+      current_user = usernames[index];
+      // console.log("Current user is " + usernames[index])
+    }
+  }
 
   const output_max_voltage = entryList.reduce((prevValue, { date, DayMaxVoltage }) => {
     prevValue[date] = typeof DayMaxVoltage === "string" ? JSON.parse(DayMaxVoltage) : DayMaxVoltage
@@ -112,7 +144,7 @@ const power_factor = entryList.reduce((prevValue, { date, powerFactor }) => {
     aligh-items-center mx-auto' style={{"width":"70%",
     "backgroundColor":"white", "marginTop":"15px"}}>
       <h1>ELECTRO APP</h1>
-        <h3>Welcome {auth.user}</h3>
+        <h3>Welcome {current_user}</h3>
         <button onClick={handleLogout} className="mb-5">Logout</button>
       <center>  
         <div style={
