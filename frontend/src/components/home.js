@@ -44,7 +44,7 @@ function Home(){
     }
 
     getEntry();
-  },[])
+  }, 5000)
 
   useEffect(() =>{
     const getUser = async () => {
@@ -53,7 +53,7 @@ function Home(){
     }
 
     getUser();
-  },[])
+  }, 5000)
 
   // console.log(userList)
 
