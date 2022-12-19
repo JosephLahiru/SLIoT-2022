@@ -29,7 +29,7 @@ function LogIn() {
   },[])
 
   const user_data = userList.reduce((prevValue, { email, password }) => {
-    prevValue[email] = typeof password === "string" ? JSON.parse(password) : password
+    prevValue[email] = typeof password === "string" ? password : password
     return prevValue;
 }, {});
 
@@ -41,7 +41,10 @@ const passwords = Object.values(user_data)
     for (let index = 0; index < emails.length; index++) {
       if(emails[index]===email){
         console.log(emails[index]);
+        console.log(passwords[index])
+        console.log(password)
         if(passwords[index]==password){
+          console.log(passwords[index])
           auth.login(email);
           navigate('/', {replace:true});
         }
