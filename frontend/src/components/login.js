@@ -40,11 +40,11 @@ const passwords = Object.values(user_data)
 
     for (let index = 0; index < elecAccNumbers.length; index++) {
       if(elecAccNumbers[index]===elecAccNumber){
-        console.log(elecAccNumbers[index]);
-        console.log(passwords[index])
-        console.log(password)
+        // console.log(elecAccNumbers[index]);
+        // console.log(passwords[index])
+        // console.log(password)
         if(passwords[index]==password){
-          console.log(passwords[index])
+          // console.log(passwords[index])
           auth.login(elecAccNumber);
           navigate('/', {replace:true});
         }
