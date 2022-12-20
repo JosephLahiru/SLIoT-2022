@@ -57,9 +57,9 @@ const passwords = Object.values(user_data)
     aligh-items-center mx-auto' style={{"width":"600px",
     "backgroundColor":"white", "marginTop":"15px"}}>
       <h1 className="card text-white bg-info mb-1"
-      styleName="max-width: 20rem;">ELECTRO APP</h1>
+      styleName="max-width: 20rem;">AEMS</h1>
       <h6 className="card text-white bg-info mb-3">
-        TEAM METATRON</h6>
+      Advanced Energy Monitoring System</h6>
       <div className="card-body">
         <h5 className="card text-white bg-dark mb-5">Log In</h5>
         <span className="card-text">
