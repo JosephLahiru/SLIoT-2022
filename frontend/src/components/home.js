@@ -57,21 +57,25 @@ function Home(){
 
   // console.log(userList)
 
-  const user_data = userList.reduce((prevValue, { email, fname }) => {
-    prevValue[email] = typeof fname === "string" ? fname : fname
+  const user_fdata = userList.reduce((prevValue, { elecAccNumber, fname}) => {
+    prevValue[elecAccNumber] = typeof fname === "string" ? fname : fname
     return prevValue;
 }, {});
 
-  // console.log(user_data);
+const user_ldata = userList.reduce((prevValue, { elecAccNumber, lname }) => {
+  prevValue[elecAccNumber] = typeof lname === "string" ? lname : lname
+  return prevValue;
+}, {});
 
   let current_user = "unknown";
 
-  const emails = Object.keys(user_data)
-  const usernames = Object.values(user_data)
+  const elecAccNumbers = Object.keys(user_fdata)
+  const userfnames = Object.values(user_fdata)
+  const userlnames = Object.values(user_ldata)
 
-  for (let index = 0; index < emails.length; index++) {
-    if(emails[index]===auth.user){
-      current_user = usernames[index];
+  for (let index = 0; index < elecAccNumbers.length; index++) {
+    if(elecAccNumbers[index]===auth.user){
+      current_user = userfnames[index] + " " + userlnames[index];
       // console.log("Current user is " + usernames[index])
     }
   }
@@ -143,8 +147,10 @@ const power_factor = entryList.reduce((prevValue, { date, powerFactor }) => {
     <div className='App list-group-item justify-content-center
     aligh-items-center mx-auto' style={{"width":"70%",
     "backgroundColor":"white", "marginTop":"15px"}}>
-      <h1>ELECTRO APP</h1>
+      <h1>Advance Energy Monitoring System</h1>
+      <hr/>
         <h3>Welcome {current_user}</h3>
+        <h4>{"Electric Account Number: " + auth.user + ""}</h4>
         <button onClick={handleLogout} className="mb-5">Logout</button>
       <center>  
         <div style={

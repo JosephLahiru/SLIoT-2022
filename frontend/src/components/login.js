@@ -10,7 +10,7 @@ import { useAuth } from './auth';
 function LogIn() {
 
   const [userList, setUserList] = useState([{}]);
-  const [email, setEmail] = useState('');
+  const [elecAccNumber, setElecAccNumber] = useState('');
   const [password, setPassword] = useState('');
   const auth = useAuth();
   const navigate = useNavigate();
@@ -28,24 +28,24 @@ function LogIn() {
     getUser();
   },[])
 
-  const user_data = userList.reduce((prevValue, { email, password }) => {
-    prevValue[email] = typeof password === "string" ? password : password
+  const user_data = userList.reduce((prevValue, { elecAccNumber, password }) => {
+    prevValue[elecAccNumber] = typeof password === "string" ? password : password
     return prevValue;
 }, {});
 
-const emails = Object.keys(user_data)
+const elecAccNumbers = Object.keys(user_data)
 const passwords = Object.values(user_data)
 
   const authenticateUser = async () => {
 
-    for (let index = 0; index < emails.length; index++) {
-      if(emails[index]===email){
-        console.log(emails[index]);
-        console.log(passwords[index])
-        console.log(password)
+    for (let index = 0; index < elecAccNumbers.length; index++) {
+      if(elecAccNumbers[index]===elecAccNumber){
+        // console.log(elecAccNumbers[index]);
+        // console.log(passwords[index])
+        // console.log(password)
         if(passwords[index]==password){
-          console.log(passwords[index])
-          auth.login(email);
+          // console.log(passwords[index])
+          auth.login(elecAccNumber);
           navigate('/', {replace:true});
         }
       }
@@ -64,7 +64,7 @@ const passwords = Object.values(user_data)
         <h5 className="card text-white bg-dark mb-5">Log In</h5>
         <span className="card-text">
 
-          <input value={email} className="mb-2 form-control" onChange={event => setEmail(event.target.value)} placeholder="Email"/>
+          <input value={elecAccNumber} className="mb-2 form-control" onChange={event => setElecAccNumber(event.target.value)} placeholder="Electronic Account Number"/>
           <input type="password" value={password} className="mb-5 form-control" onChange={event => setPassword(event.target.value)} placeholder="Password"/>
 
           <button className="btn btn-outline-primary mx-2 mb-3" style={

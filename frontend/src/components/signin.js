@@ -17,13 +17,14 @@ function SignUp() {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [userName, setUserName] = useState('');
+  const [nidNumber, setNIDNumber] = useState('');
   const [password, setPassword] = useState('');
+  const [elecAccNumber, setelecAccNumber] = useState('');
 
   const userCollectionRef = collection(db, "user");
 
   const signupUser = async () => {
-    await addDoc(userCollectionRef, {email: email, fname: firstName, lname: lastName, uname: userName, password: password});
+    await addDoc(userCollectionRef, {email: email, fname: firstName, lname: lastName, nidnum: nidNumber, elecAccNumber: elecAccNumber, password: password});
 
     navigate('/login');
   };
@@ -43,7 +44,8 @@ function SignUp() {
           <input value={email} className="mb-2 form-control" onChange={event => setEmail(event.target.value)} placeholder="Email"/>
           <input value={firstName} className="mb-2 form-control" onChange={event => setFirstName(event.target.value)} placeholder="First Name"/>
           <input value={lastName} className="mb-2 form-control" onChange={event => setLastName(event.target.value)} placeholder="Last Name"/>
-          <input value={userName} className="mb-2 form-control" onChange={event => setUserName(event.target.value)} placeholder="User Name"/>
+          <input value={nidNumber} className="mb-2 form-control" onChange={event => setNIDNumber(event.target.value)} placeholder="National ID Card Number"/>
+          <input value={elecAccNumber} className="mb-2 form-control" onChange={event => setelecAccNumber(event.target.value)} placeholder="Electronic Account Number"/>
           <input type="password" value={password} className="mb-5 form-control" onChange={event => setPassword(event.target.value)} placeholder="Password"/>
 
           <button className="btn btn-outline-primary mx-2 mb-3" style={
