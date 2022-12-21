@@ -147,7 +147,7 @@ const power_factor = entryList.reduce((prevValue, { date, powerFactor }) => {
     <div className='App list-group-item justify-content-center
     aligh-items-center mx-auto' style={{"width":"70%",
     "backgroundColor":"white", "marginTop":"15px"}}>
-      <h1>Advance Energy Monitoring System</h1>
+      <h1>Advanced Energy Monitoring System</h1>
       <hr/>
         <h3>Welcome {current_user}</h3>
         <h4>{"Electric Account Number: " + auth.user + ""}</h4>
