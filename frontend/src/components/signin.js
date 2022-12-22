@@ -7,6 +7,9 @@ import {db} from './../firebase-config';
 import {collection, getDocs, addDoc} from 'firebase/firestore';
 import { useAuth } from './auth';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function SignUp() {
 
   const navigate = useNavigate();
@@ -52,6 +55,19 @@ function SignUp() {
           {'borderRadius':"50px", "font-weight":"bold"}} onClick={signupUser}>Sign Up</button>
           <br/>Already Have an account <Link to='/login'>Login</Link>.
         </span>
+        <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+        <ToastContainer />
       </div>
     </div>
   );

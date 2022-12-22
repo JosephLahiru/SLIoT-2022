@@ -3,6 +3,9 @@ import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import {
   Chart as ChartJS,
   BarElement,
@@ -28,6 +31,17 @@ ChartJS.register(
 
 function Home(){
 
+  toast.success('Logged-in Successfully!!!', {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+  });
+
   const [entryList, setEntryList] = useState([{}]);
   const [userList, setUserList] = useState([{}]);
 
@@ -36,6 +50,22 @@ function Home(){
 
   const auth = useAuth();
   const navigate = useNavigate();
+
+  // useEffect(() =>{
+  //   const showSuccess = () => {
+  //     toast.success('Logged-in Successfully!!!', {
+  //       position: "top-right",
+  //       autoClose: 3000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "light",
+  //     });
+  //   }
+  //   showSuccess();
+  // }, [])
 
   useEffect(() =>{
     const getEntry = async () => {
@@ -176,6 +206,19 @@ const power_factor = entryList.reduce((prevValue, { date, powerFactor }) => {
           ></Bar>
         </div>
       </center>
+      <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+        <ToastContainer />
     </div>
   )
 }
