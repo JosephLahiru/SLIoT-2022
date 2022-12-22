@@ -53,7 +53,7 @@ const passwords = Object.values(user_data)
         }
         toast.error('Please check your credentials!!!', {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -61,10 +61,14 @@ const passwords = Object.values(user_data)
           progress: undefined,
           theme: "light",
         });
+
+        setElecAccNumber('');
+        setPassword('');
+
       }else{
         toast.error('Password cannot be empty!!!', {
           position: "top-right",
-          autoClose: 3000,
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -72,11 +76,14 @@ const passwords = Object.values(user_data)
           progress: undefined,
           theme: "light",
         });
+
+        setElecAccNumber('');
+        setPassword('');
       }
     }else{
       toast.error('Electronic Account Number cannot be empty!!!', {
         position: "top-right",
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -84,6 +91,9 @@ const passwords = Object.values(user_data)
         progress: undefined,
         theme: "light",
       });
+
+      setElecAccNumber('');
+      setPassword('');
     }
   };
 
@@ -108,7 +118,7 @@ const passwords = Object.values(user_data)
         </span>
         <ToastContainer
               position="top-right"
-              autoClose={3000}
+              autoClose={2000}
               hideProgressBar={false}
               newestOnTop={false}
               closeOnClick
