@@ -7,6 +7,9 @@ import {db} from './../firebase-config';
 import {collection, getDocs} from 'firebase/firestore';
 import { useAuth } from './auth';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function LogIn() {
 
   const [userList, setUserList] = useState([{}]);
@@ -38,17 +41,49 @@ const passwords = Object.values(user_data)
 
   const authenticateUser = async () => {
 
-    for (let index = 0; index < elecAccNumbers.length; index++) {
-      if(elecAccNumbers[index]===elecAccNumber){
-        // console.log(elecAccNumbers[index]);
-        // console.log(passwords[index])
-        // console.log(password)
-        if(passwords[index]==password){
-          // console.log(passwords[index])
-          auth.login(elecAccNumber);
-          navigate('/', {replace:true});
+    if((elecAccNumber.length !== 0)){
+      if((password.length !== 0)){
+        for (let index = 0; index < elecAccNumbers.length; index++) {
+          if(elecAccNumbers[index]===elecAccNumber){
+            if(passwords[index]==password){
+              auth.login(elecAccNumber);
+              navigate('/', {replace:true});
+            }
+          }
         }
+        toast.error('Please check your credentials!!!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }else{
+        toast.error('Password cannot be empty!!!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       }
+    }else{
+      toast.error('Electronic Account Number cannot be empty!!!', {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   };
 
@@ -71,6 +106,19 @@ const passwords = Object.values(user_data)
           {'borderRadius':"50px", "font-weight":"bold"}} onClick={authenticateUser}>Log In</button>
           <br/>Don't Have an account <Link to='/signup'>Sign Up</Link>.
         </span>
+        <ToastContainer
+              position="top-right"
+              autoClose={3000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+        <ToastContainer />
       </div>
     </div>
   );
