@@ -10,6 +10,8 @@ import { useAuth } from './auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import validator from 'validator'
+
 function SignUp() {
 
   const navigate = useNavigate();
@@ -26,10 +28,133 @@ function SignUp() {
 
   const userCollectionRef = collection(db, "user");
 
-  const signupUser = async () => {
-    await addDoc(userCollectionRef, {email: email, fname: firstName, lname: lastName, nidnum: nidNumber, elecAccNumber: elecAccNumber, password: password});
+  function isValidEmail(email) {
+    return(/\S+@\S+\.\S+/.test(email));
+  }
 
-    navigate('/login');
+  function isValidNID(idCardNumber) {
+    if (idCardNumber.length !== 10) {
+      return false;
+    }
+    if (!/^[1-9]/.test(idCardNumber)) {
+      return false;
+    }
+    const gender = idCardNumber.charAt(9);
+
+    if (isNaN(idCardNumber.substr(0, 9))) {
+      return false;
+    }
+
+    if (gender !== "V" && gender !== "X") {
+      return false;
+    }
+    return true;
+  }
+
+  const signupUser = async () => {
+    if(email.length === 0){
+      toast.error('Email cannot be empty!!!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }else if(isValidEmail(email) === false){
+      toast.error('Please enter a valid Email!!!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }else if(firstName.length === 0){
+      toast.error('First Name cannot be empty!!!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }else if(isValidNID(nidNumber) === false){
+      toast.error('Please enter a valid NID Number!!!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }else if(nidNumber.length === 0){
+      toast.error('NID Number cannot be empty!!!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }else if(nidNumber.length === 0){
+      toast.error('NID Number cannot be empty!!!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }else if(elecAccNumber.length === 0){
+      toast.error('Electronic Account Number cannot be empty!!!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }else if(elecAccNumber.length !== 10 || isNaN(elecAccNumber)){
+      toast.error('Please enter a valid Electronic Account Number!!!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }else if(password.length === 0){
+      toast.error('Password cannot be empty!!!', {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }else{
+      await addDoc(userCollectionRef, {email: email, fname: firstName, lname: lastName, nidnum: nidNumber, elecAccNumber: elecAccNumber, password: password});
+      navigate('/login');
+    }
   };
 
   return (
