@@ -10,7 +10,18 @@ import { useAuth } from './auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import validator from 'validator'
+function SendToast(message){
+  toast.error(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+}
 
 function SignUp() {
 
@@ -53,104 +64,21 @@ function SignUp() {
 
   const signupUser = async () => {
     if(email.length === 0){
-      toast.error('Email cannot be empty!!!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      SendToast('Email cannot be empty!!!');
     }else if(isValidEmail(email) === false){
-      toast.error('Please enter a valid Email!!!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      SendToast('Please enter a valid Email!!!');
     }else if(firstName.length === 0){
-      toast.error('First Name cannot be empty!!!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      SendToast('First Name cannot be empty!!!');
     }else if(isValidNID(nidNumber) === false){
-      toast.error('Please enter a valid NID Number!!!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      SendToast('Please enter a valid NID Number!!!');
     }else if(nidNumber.length === 0){
-      toast.error('NID Number cannot be empty!!!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }else if(nidNumber.length === 0){
-      toast.error('NID Number cannot be empty!!!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      SendToast('NID Number cannot be empty!!!');
     }else if(elecAccNumber.length === 0){
-      toast.error('Electronic Account Number cannot be empty!!!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      SendToast('Electronic Account Number cannot be empty!!!');
     }else if(elecAccNumber.length !== 10 || isNaN(elecAccNumber)){
-      toast.error('Please enter a valid Electronic Account Number!!!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      SendToast('Please enter a valid Electronic Account Number!!!');
     }else if(password.length === 0){
-      toast.error('Password cannot be empty!!!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      SendToast('Please enter a valid Electronic Account Number!!!');
     }else{
       await addDoc(userCollectionRef, {email: email, fname: firstName, lname: lastName, nidnum: nidNumber, elecAccNumber: elecAccNumber, password: password});
       navigate('/login');

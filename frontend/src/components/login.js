@@ -10,6 +10,19 @@ import { useAuth } from './auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+function SendToast(message){
+  toast.error(message, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      });
+}
+
 function LogIn() {
 
   const [userList, setUserList] = useState([{}]);
@@ -51,46 +64,19 @@ const passwords = Object.values(user_data)
             }
           }
         }
-        toast.error('Please check your credentials!!!', {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        SendToast('Please check your credentials!!!');
 
         setElecAccNumber('');
         setPassword('');
 
       }else{
-        toast.error('Password cannot be empty!!!', {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
+        SendToast('Password cannot be empty!!!');
 
         setElecAccNumber('');
         setPassword('');
       }
     }else{
-      toast.error('Electronic Account Number cannot be empty!!!', {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
+      SendToast('Electronic Account Number cannot be empty!!!');
 
       setElecAccNumber('');
       setPassword('');
