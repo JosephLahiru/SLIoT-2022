@@ -105,17 +105,28 @@ const user_ldata = userList.reduce((prevValue, { elecAccNumber, lname }) => {
   for (let index = 0; index < elecAccNumbers.length; index++) {
     if(elecAccNumbers[index]===auth.user){
       current_user = userfnames[index] + " " + userlnames[index];
-      // console.log("Current user is " + usernames[index])
-      cuurent_elec_acc_number = elecAccNumbers[index];
+      cuurent_elec_acc_number = auth.user;
     }
   }
+
+  console.log("Current user elecAccNumber is " + cuurent_elec_acc_number);
 
   useEffect(() =>{
     const getEntry = async () => {
       const _data_ = await getDocs(entryCollectionRef);
-      const filteredData = _data_.docs.filter(doc => doc.data().elecAccNumber === cuurent_elec_acc_number);
+      //const filteredData = _data_.docs.filter(doc => doc.data().elecAccNumber === cuurent_elec_acc_number);
+
+      const filteredData = _data_.docs.filter(doc => {
+        console.log("Current user elecAccNumber is " + cuurent_elec_acc_number + " <---> " + doc.data().elecAccNumber)
+        return doc.data().elecAccNumber === cuurent_elec_acc_number;
+      });
+
+      console.log(filteredData);
+
       if (filteredData.length) {
         setEntryList(filteredData.map(doc => ({ ...doc.data(), id:doc.id})));
+      }else{
+        console.log("No user data found!!!")
       }
     }
   
