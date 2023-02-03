@@ -1,6 +1,7 @@
 import {Routes, Route} from 'react-router-dom';
 import { About } from './components/about';
 import { AuthProvider } from './components/auth';
+import Footer from './components/footer';
 import Home from './components/home';
 import LogIn from './components/login';
 import { Navbar } from './components/navbar';
@@ -19,6 +20,7 @@ function App(){
         <Route path='signup' element={<SignUp/>}></Route>
         <Route path='*' element={<NoMatch/>}></Route>
       </Routes>
+      <Footer/>
     </AuthProvider>
   );
 }

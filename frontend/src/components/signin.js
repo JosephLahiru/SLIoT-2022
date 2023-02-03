@@ -106,7 +106,7 @@ function SignUp() {
 
           <button className="btn btn-outline-primary mx-2 mb-3" style={
           {'borderRadius':"50px", "font-weight":"bold"}} onClick={signupUser}>Sign Up</button>
-          <br/>Already Have an account <Link to='/login'>Login</Link>.
+          <br/>Already Have an account? <Link to='/login'>Login</Link>.
         </span>
         <ToastContainer
               position="top-right"
