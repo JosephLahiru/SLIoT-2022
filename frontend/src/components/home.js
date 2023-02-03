@@ -67,14 +67,14 @@ function Home(){
   //   showSuccess();
   // }, [])
 
-  useEffect(() =>{
-    const getEntry = async () => {
-      const _data_ = await getDocs(entryCollectionRef);
-      setEntryList(_data_.docs.map((doc) => ({ ...doc.data(), id:doc.id})));
-    }
+  // useEffect(() =>{
+  //   const getEntry = async () => {
+  //     const _data_ = await getDocs(entryCollectionRef);
+  //     setEntryList(_data_.docs.map((doc) => ({ ...doc.data(), id:doc.id})));
+  //   }
 
-    getEntry();
-  }, 5000)
+  //   getEntry();
+  // }, 5000)
 
   useEffect(() =>{
     const getUser = async () => {
@@ -84,8 +84,6 @@ function Home(){
 
     getUser();
   }, 5000)
-
-  // console.log(userList)
 
   const user_fdata = userList.reduce((prevValue, { elecAccNumber, fname}) => {
     prevValue[elecAccNumber] = typeof fname === "string" ? fname : fname
@@ -98,6 +96,7 @@ const user_ldata = userList.reduce((prevValue, { elecAccNumber, lname }) => {
 }, {});
 
   let current_user = "unknown";
+  let cuurent_elec_acc_number = "unknown";
 
   const elecAccNumbers = Object.keys(user_fdata)
   const userfnames = Object.values(user_fdata)
@@ -107,8 +106,21 @@ const user_ldata = userList.reduce((prevValue, { elecAccNumber, lname }) => {
     if(elecAccNumbers[index]===auth.user){
       current_user = userfnames[index] + " " + userlnames[index];
       // console.log("Current user is " + usernames[index])
+      cuurent_elec_acc_number = elecAccNumbers[index];
     }
   }
+
+  useEffect(() =>{
+    const getEntry = async () => {
+      const _data_ = await getDocs(entryCollectionRef);
+      const filteredData = _data_.docs.filter(doc => doc.data().elecAccNumber === cuurent_elec_acc_number);
+      if (filteredData.length) {
+        setEntryList(filteredData.map(doc => ({ ...doc.data(), id:doc.id})));
+      }
+    }
+  
+    getEntry();
+  }, 5000)
 
   const output_max_voltage = entryList.reduce((prevValue, { date, DayMaxVoltage }) => {
     prevValue[date] = typeof DayMaxVoltage === "string" ? JSON.parse(DayMaxVoltage) : DayMaxVoltage
