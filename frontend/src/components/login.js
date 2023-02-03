@@ -100,7 +100,7 @@ const passwords = Object.values(user_data)
 
           <button className="btn btn-outline-primary mx-2 mb-3" style={
           {'borderRadius':"50px", "font-weight":"bold"}} onClick={authenticateUser}>Log In</button>
-          <br/>Don't Have an account <Link to='/signup'>Sign Up</Link>.
+          <br/>Don't Have an account? <Link to='/signup'>Sign Up</Link>.
         </span>
         <ToastContainer
               position="top-right"
