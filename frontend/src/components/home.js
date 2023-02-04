@@ -55,10 +55,10 @@ function Home(){
 
   useEffect(() =>{
     const getUser = async () => {
-      console.log("getting user data");
+      //console.log("getting user data");
       const _data_ = await getDocs(userCollectionRef);
       setUserList(_data_.docs.map((doc) => ({ ...doc.data(), id:doc.id})));
-      console.log(userList);
+      //console.log(userList);
     }
 
     getUser();
@@ -84,23 +84,23 @@ const user_ldata = userList.reduce((prevValue, { elecAccNumber, lname }) => {
     }
   }
 
-  console.log("Current user elecAccNumber is " + auth.user);
+  //console.log("Current user elecAccNumber is " + auth.user);
 
   useEffect(() =>{
     const getEntry = async () => {
       const _data_ = await getDocs(entryCollectionRef);
 
       const filteredData = _data_.docs.filter(doc => {
-        console.log("Current user elecAccNumber is " + auth.user + " <---> " + doc.data().elecAccNumber)
+        //console.log("Current user elecAccNumber is " + auth.user + " <---> " + doc.data().elecAccNumber)
         return doc.data().elecAccNumber === auth.user;
       });
 
-      console.log(filteredData);
+      //console.log(filteredData);
 
       if (filteredData.length) {
         setEntryList(filteredData.map(doc => ({ ...doc.data(), id:doc.id})));
       }else{
-        console.log("No user data found!!!")
+        //console.log("No user data found!!!")
       }
     }
   
