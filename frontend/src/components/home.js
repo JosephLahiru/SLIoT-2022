@@ -29,11 +29,13 @@ ChartJS.register(
   Legend
 )
 
+let current_user = "unknown";
+
 function Home(){
 
   toast.success('Logged-in Successfully!!!', {
     position: "top-right",
-    autoClose: 3000,
+    autoClose: 2000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -51,39 +53,16 @@ function Home(){
   const auth = useAuth();
   const navigate = useNavigate();
 
-  // useEffect(() =>{
-  //   const showSuccess = () => {
-  //     toast.success('Logged-in Successfully!!!', {
-  //       position: "top-right",
-  //       autoClose: 3000,
-  //       hideProgressBar: false,
-  //       closeOnClick: true,
-  //       pauseOnHover: true,
-  //       draggable: true,
-  //       progress: undefined,
-  //       theme: "light",
-  //     });
-  //   }
-  //   showSuccess();
-  // }, [])
-
-  // useEffect(() =>{
-  //   const getEntry = async () => {
-  //     const _data_ = await getDocs(entryCollectionRef);
-  //     setEntryList(_data_.docs.map((doc) => ({ ...doc.data(), id:doc.id})));
-  //   }
-
-  //   getEntry();
-  // }, 5000)
-
   useEffect(() =>{
     const getUser = async () => {
+      console.log("getting user data");
       const _data_ = await getDocs(userCollectionRef);
       setUserList(_data_.docs.map((doc) => ({ ...doc.data(), id:doc.id})));
+      console.log(userList);
     }
 
     getUser();
-  }, 5000)
+  }, [])
 
   const user_fdata = userList.reduce((prevValue, { elecAccNumber, fname}) => {
     prevValue[elecAccNumber] = typeof fname === "string" ? fname : fname
@@ -95,9 +74,6 @@ const user_ldata = userList.reduce((prevValue, { elecAccNumber, lname }) => {
   return prevValue;
 }, {});
 
-  let current_user = "unknown";
-  let cuurent_elec_acc_number = "unknown";
-
   const elecAccNumbers = Object.keys(user_fdata)
   const userfnames = Object.values(user_fdata)
   const userlnames = Object.values(user_ldata)
@@ -105,20 +81,18 @@ const user_ldata = userList.reduce((prevValue, { elecAccNumber, lname }) => {
   for (let index = 0; index < elecAccNumbers.length; index++) {
     if(elecAccNumbers[index]===auth.user){
       current_user = userfnames[index] + " " + userlnames[index];
-      cuurent_elec_acc_number = auth.user;
     }
   }
 
-  console.log("Current user elecAccNumber is " + cuurent_elec_acc_number);
+  console.log("Current user elecAccNumber is " + auth.user);
 
   useEffect(() =>{
     const getEntry = async () => {
       const _data_ = await getDocs(entryCollectionRef);
-      //const filteredData = _data_.docs.filter(doc => doc.data().elecAccNumber === cuurent_elec_acc_number);
 
       const filteredData = _data_.docs.filter(doc => {
-        console.log("Current user elecAccNumber is " + cuurent_elec_acc_number + " <---> " + doc.data().elecAccNumber)
-        return doc.data().elecAccNumber === cuurent_elec_acc_number;
+        console.log("Current user elecAccNumber is " + auth.user + " <---> " + doc.data().elecAccNumber)
+        return doc.data().elecAccNumber === auth.user;
       });
 
       console.log(filteredData);
@@ -131,7 +105,7 @@ const user_ldata = userList.reduce((prevValue, { elecAccNumber, lname }) => {
     }
   
     getEntry();
-  }, 5000)
+  }, [])
 
   const output_max_voltage = entryList.reduce((prevValue, { date, DayMaxVoltage }) => {
     prevValue[date] = typeof DayMaxVoltage === "string" ? JSON.parse(DayMaxVoltage) : DayMaxVoltage
@@ -192,6 +166,7 @@ const power_factor = entryList.reduce((prevValue, { date, powerFactor }) => {
   };
 
   const handleLogout = () =>{
+    current_user = "unknown";
     auth.logout();
     navigate('login');
   }
