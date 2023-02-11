@@ -37,6 +37,7 @@ function SignUp() {
   const [nidNumber, setNIDNumber] = useState('');
   const [password, setPassword] = useState('');
   const [elecAccNumber, setelecAccNumber] = useState('');
+  const [address, setAddress] = useState('');
 
   const userCollectionRef = collection(db, "user");
 
@@ -70,6 +71,10 @@ function SignUp() {
       SendToast('Please enter a valid Email!!!');
     }else if(firstName.length === 0){
       SendToast('First Name cannot be empty!!!');
+    }else if(lastName.length === 0){
+      SendToast('Last Name cannot be empty!!!');
+    }else if(address.length === 0){
+      SendToast('Address cannot be empty!!!');
     }else if(isValidNID(nidNumber) === false){
       SendToast('Please enter a valid NID Number!!!');
     }else if(nidNumber.length === 0){
@@ -81,7 +86,7 @@ function SignUp() {
     }else if(password.length === 0){
       SendToast('Please enter a valid Electronic Account Number!!!');
     }else{
-      await addDoc(userCollectionRef, {email: email, fname: firstName, lname: lastName, nidnum: nidNumber, elecAccNumber: elecAccNumber, password: password});
+      await addDoc(userCollectionRef, {email: email, fname: firstName, lname: lastName, nidnum: nidNumber, elecAccNumber: elecAccNumber, password: password, address: address});
       navigate('/login');
     }
   };
@@ -100,6 +105,7 @@ function SignUp() {
           <input value={email} className="mb-2 form-control" onChange={event => setEmail(event.target.value)} placeholder="Email"/>
           <input value={firstName} className="mb-2 form-control" onChange={event => setFirstName(event.target.value)} placeholder="First Name"/>
           <input value={lastName} className="mb-2 form-control" onChange={event => setLastName(event.target.value)} placeholder="Last Name"/>
+          <input value={address} className="mb-2 form-control" onChange={event => setAddress(event.target.value)} placeholder="Address"/>
           <input value={nidNumber} className="mb-2 form-control" onChange={event => setNIDNumber(event.target.value)} placeholder="National ID Card Number"/>
           <input value={elecAccNumber} className="mb-2 form-control" onChange={event => setelecAccNumber(event.target.value)} placeholder="Electronic Account Number"/>
           <input type="password" value={password} className="mb-5 form-control" onChange={event => setPassword(event.target.value)} placeholder="Password"/>
