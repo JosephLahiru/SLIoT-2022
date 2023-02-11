@@ -88,7 +88,7 @@ function SignUp() {
 
   return (
     <div className='App list-group-item justify-content-center
-    aligh-items-center mx-auto main-panel'>
+    aligh-items-center mx-auto main_panel'>
       <h1 className="card text-white bg-info mb-1"
       styleName="max-width: 20rem;">ELECTRO APP</h1>
       <h6 className="card text-white bg-info mb-3">
