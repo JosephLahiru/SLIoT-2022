@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './../css/home.css';
 
 import {
   Chart as ChartJS,
@@ -30,6 +31,7 @@ ChartJS.register(
 )
 
 let current_user = "unknown";
+let current_address = "unknown";
 
 function Home(){
 
@@ -74,13 +76,22 @@ const user_ldata = userList.reduce((prevValue, { elecAccNumber, lname }) => {
   return prevValue;
 }, {});
 
+const user_adddata = userList.reduce((prevValue, { elecAccNumber, address }) => {
+  prevValue[elecAccNumber] = typeof address === "string" ? address : address
+  return prevValue;
+}, {});
+
   const elecAccNumbers = Object.keys(user_fdata)
   const userfnames = Object.values(user_fdata)
   const userlnames = Object.values(user_ldata)
+  const useraddresses = Object.values(user_adddata)
+
+  //console.log(useraddresses);
 
   for (let index = 0; index < elecAccNumbers.length; index++) {
     if(elecAccNumbers[index]===auth.user){
       current_user = userfnames[index] + " " + userlnames[index];
+      current_address = useraddresses[index];
     }
   }
 
@@ -167,18 +178,20 @@ const power_factor = entryList.reduce((prevValue, { date, powerFactor }) => {
 
   const handleLogout = () =>{
     current_user = "unknown";
+    current_address = "unknown";
     auth.logout();
     navigate('login');
   }
 
   return(
     <div className='App list-group-item justify-content-center
-    aligh-items-center mx-auto' style={{"width":"70%",
+    aligh-items-center mx-auto' style={{"width":"80%",
     "backgroundColor":"white", "marginTop":"15px"}}>
       <h1>Advanced Energy Monitoring System</h1>
       <hr/>
-        <h3>Welcome {current_user}</h3>
-        <h4>{"Electric Account Number: " + auth.user + ""}</h4>
+        <h3 className='user-data'>Welcome {current_user}</h3>
+        <h3 className='user-data'>{"Electric Account Number: " + auth.user + ""}</h3>
+        <h3 className='user-data'>{"Address: " + current_address + ""}</h3>
         <button onClick={handleLogout} className="mb-5">Logout</button>
       <center>  
         <div style={
