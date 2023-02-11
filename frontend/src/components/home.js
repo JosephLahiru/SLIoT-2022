@@ -123,52 +123,39 @@ const user_adddata = userList.reduce((prevValue, { elecAccNumber, address }) => 
     return prevValue;
 }, {});
 
-const output_tot_power = entryList.reduce((prevValue, { date, DayTotPower }) => {
-  prevValue[date] = typeof DayTotPower === "string" ? JSON.parse(DayTotPower) : DayTotPower
+const output_tot_real_power = entryList.reduce((prevValue, { date, DayTotRealPower }) => {
+  prevValue[date] = typeof DayTotRealPower === "string" ? JSON.parse(DayTotRealPower) : DayTotRealPower
   return prevValue;
 }, {});
 
-const power_factor = entryList.reduce((prevValue, { date, powerFactor }) => {
-  prevValue[date] = typeof powerFactor === "string" ? JSON.parse(powerFactor) : powerFactor
+const output_tot_apperent_power = entryList.reduce((prevValue, { date, DaytotapparentPower }) => {
+  prevValue[date] = typeof DaytotapparentPower === "string" ? JSON.parse(DaytotapparentPower) : DaytotapparentPower
   return prevValue;
 }, {});
 
-  const max_vol_data={
+  const tot_real_pow_data={
     labels: Object.keys(output_max_voltage),
     datasets: [
       {
-        label: 'Max Voltage',
-        data: Object.values(output_max_voltage),
+        label: 'Total Real Power',
+        data: Object.values(output_tot_real_power),
         backgroundColor: 'aqua',
-        borderColor: 'black',
-        borderWidth: 1,
-      }
-    ]
-  };
-
-  const tot_pow_data={
-    labels: Object.keys(output_max_voltage),
-    datasets: [
-      {
-        label: 'Total Power',
-        data: Object.values(output_tot_power),
-        backgroundColor: 'green',
         borderColor: 'black',
         borderWidth: 1,
       },
     ]
   };
 
-  const pow_fac_data={
+  const tot_appr_pow_data={
     labels: Object.keys(output_max_voltage),
     datasets: [
       {
-        label: 'Power Factor',
-        data: Object.values(power_factor),
-        backgroundColor: 'red',
+        label: 'Total Apparent Power',
+        data: Object.values(output_tot_apperent_power),
+        backgroundColor: 'green',
         borderColor: 'black',
         borderWidth: 1,
-      }
+      },
     ]
   };
 
@@ -189,34 +176,32 @@ const power_factor = entryList.reduce((prevValue, { date, powerFactor }) => {
     "backgroundColor":"white", "marginTop":"15px"}}>
       <h1>Advanced Energy Monitoring System</h1>
       <hr/>
-        <h3 className='user-data'>Welcome {current_user}</h3>
-        <h3 className='user-data'>{"Electric Account Number: " + auth.user + ""}</h3>
-        <h3 className='user-data'>{"Address: " + current_address + ""}</h3>
+        <h3 className='user-data'><b>Name: </b>{current_user}</h3>
+        <h3 className='user-data'><b>Acc No: </b>{auth.user}</h3>
+        <h3 className='user-data'><b>Address: </b>{current_address}</h3>
         <button onClick={handleLogout} className="mb-5">Logout</button>
       <center>  
         <div style={
               {padding: '20px'}
             }>
-          <h3>Max Voltage</h3>
+          <h3>Daily Energy Consumption</h3>
           <Bar
-            data={max_vol_data}
+            data={tot_real_pow_data}
             options={options}
             className="mb-4"
           ></Bar>
-          <h3>Total Power</h3>
+          <h3>Daily Apperent Power Consumption</h3>
             <Bar
-            data={tot_pow_data}
-            options={options}
-            className="mb-4"
-          ></Bar>
-          <h3>Power Factor</h3>
-            <Bar
-            data={pow_fac_data}
+            data={tot_appr_pow_data}
             options={options}
             className="mb-4"
           ></Bar>
         </div>
-      </center>
+        </center>
+        <h4 className='user-data'>{"Daily Avg PF: "}</h4>
+        <h4 className='user-data'>{"Daily Minimum Voltage: "}</h4>
+        <h4 className='user-data'>{"Daily Maximum Voltage: "}</h4>
+        <h4 className='user-data'>{"Price For Current Usage: "}</h4>
       <ToastContainer
               position="top-right"
               autoClose={3000}
