@@ -1,0 +1,11 @@
+.main_panel{
+    width: 600px;
+    background-color: white; 
+    margin-top: 15px;
+}
+
+@media (max-width: 767px) {
+    .main_panel{
+        width: 80%;
+    }
+}

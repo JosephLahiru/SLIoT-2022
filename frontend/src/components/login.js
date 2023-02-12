@@ -9,6 +9,8 @@ import { useAuth } from './auth';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './../css/login.css';
+
 
 function SendToast(message){
   toast.error(message, {
@@ -85,8 +87,7 @@ const passwords = Object.values(user_data)
 
   return (
     <div className='App list-group-item justify-content-center
-    aligh-items-center mx-auto' style={{"width":"600px",
-    "backgroundColor":"white", "marginTop":"15px"}}>
+    aligh-items-center mx-auto main_panel'>
       <h1 className="card text-white bg-info mb-1"
       styleName="max-width: 20rem;">AEMS</h1>
       <h6 className="card text-white bg-info mb-3">
