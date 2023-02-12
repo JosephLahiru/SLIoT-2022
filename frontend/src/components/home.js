@@ -7,6 +7,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './../css/home.css';
 
+import FormattedNumber from './formattedNumber';
+
 import {
   Chart as ChartJS,
   BarElement,
@@ -150,6 +152,28 @@ const output_tot_apperent_power_values = Object.values(output_max_voltage);
 const output_tot_apperent_power_sum = output_tot_apperent_power_values.reduce((a, b) => a + b, 0);
 const output_tot_apperent_power_average = output_tot_apperent_power_sum / output_tot_apperent_power_values.length;
 
+let price;
+
+if(output_tot_apperent_power_sum>60){
+  if(output_tot_apperent_power_sum>180){
+    price = (75*output_tot_apperent_power_sum)+1500;
+  }else if(output_tot_apperent_power_sum>120){
+    price = (50*output_tot_apperent_power_sum)+960;
+  }else if(output_tot_apperent_power_sum>90){
+    price = (50*output_tot_apperent_power_sum)+960;
+  }else if(output_tot_apperent_power_sum>60){
+    price = (16*output_tot_apperent_power_sum)+360;
+  }else if(output_tot_apperent_power_sum>0){
+    price = (16*output_tot_apperent_power_sum);
+  }
+}else{
+  if(output_tot_apperent_power_sum>30){
+    price = (10*output_tot_apperent_power_sum)+240;
+  }else if(output_tot_apperent_power_sum>0){
+    price = (8*output_tot_apperent_power_sum)+120;
+  }
+}
+
   const tot_real_pow_data={
     labels: Object.keys(output_max_voltage),
     datasets: [
@@ -224,7 +248,7 @@ const output_tot_apperent_power_average = output_tot_apperent_power_sum / output
         <h4 className='user-data'>{"Daily Avg PF: " + (output_tot_apperent_power_average/output_tot_real_power_average).toFixed(2) + ""}</h4>
         <h4 className='user-data'>{"Daily Minimum Voltage: " + minVoltage + ""}</h4>
         <h4 className='user-data'>{"Daily Maximum Voltage: " + maxVoltage + ""}</h4>
-        <h4 className='user-data'>{"Price For Current Usage: "}</h4>
+        <h4 className='user-data'> Price For Current Usage: <FormattedNumber value={price} /></h4>
       <ToastContainer
               position="top-right"
               autoClose={3000}
