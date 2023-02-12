@@ -123,6 +123,15 @@ const user_adddata = userList.reduce((prevValue, { elecAccNumber, address }) => 
     return prevValue;
 }, {});
 
+const maxVoltage = Math.max(...Object.values(output_max_voltage));
+
+const output_min_voltage = entryList.reduce((prevValue, { date, DayMinVoltage }) => {
+  prevValue[date] = typeof DayMinVoltage === "string" ? JSON.parse(DayMinVoltage) : DayMinVoltage
+  return prevValue;
+}, {});
+
+const minVoltage = Math.max(...Object.values(output_min_voltage));
+
 const output_tot_real_power = entryList.reduce((prevValue, { date, DayTotRealPower }) => {
   prevValue[date] = typeof DayTotRealPower === "string" ? JSON.parse(DayTotRealPower) : DayTotRealPower
   return prevValue;
@@ -132,6 +141,14 @@ const output_tot_apperent_power = entryList.reduce((prevValue, { date, Daytotapp
   prevValue[date] = typeof DaytotapparentPower === "string" ? JSON.parse(DaytotapparentPower) : DaytotapparentPower
   return prevValue;
 }, {});
+
+const output_tot_real_power_values = Object.values(output_tot_real_power);
+const output_tot_real_power_sum = output_tot_real_power_values.reduce((a, b) => a + b, 0);
+const output_tot_real_power_average = output_tot_real_power_sum / output_tot_real_power_values.length;
+
+const output_tot_apperent_power_values = Object.values(output_max_voltage);
+const output_tot_apperent_power_sum = output_tot_apperent_power_values.reduce((a, b) => a + b, 0);
+const output_tot_apperent_power_average = output_tot_apperent_power_sum / output_tot_apperent_power_values.length;
 
   const tot_real_pow_data={
     labels: Object.keys(output_max_voltage),
@@ -182,7 +199,7 @@ const output_tot_apperent_power = entryList.reduce((prevValue, { date, Daytotapp
         <button onClick={handleLogout} className="mb-5">Logout</button>
       <center>  
         <div style={
-              {padding: '20px'}
+              {padding: '20px', backgroundColor:'#f2f2f2', borderRadius:"15px"}
             }>
           <h3>Daily Energy Consumption</h3>
           <Bar
@@ -190,6 +207,11 @@ const output_tot_apperent_power = entryList.reduce((prevValue, { date, Daytotapp
             options={options}
             className="mb-4"
           ></Bar>
+        </div>
+        <br/>
+        <div style={
+              {padding: '20px', backgroundColor:'#f2f2f2', borderRadius:"15px"}
+            }>
           <h3>Daily Apperent Power Consumption</h3>
             <Bar
             data={tot_appr_pow_data}
@@ -197,10 +219,11 @@ const output_tot_apperent_power = entryList.reduce((prevValue, { date, Daytotapp
             className="mb-4"
           ></Bar>
         </div>
+        <br/>
         </center>
-        <h4 className='user-data'>{"Daily Avg PF: "}</h4>
-        <h4 className='user-data'>{"Daily Minimum Voltage: "}</h4>
-        <h4 className='user-data'>{"Daily Maximum Voltage: "}</h4>
+        <h4 className='user-data'>{"Daily Avg PF: " + (output_tot_apperent_power_average/output_tot_real_power_average).toFixed(2) + ""}</h4>
+        <h4 className='user-data'>{"Daily Minimum Voltage: " + minVoltage + ""}</h4>
+        <h4 className='user-data'>{"Daily Maximum Voltage: " + maxVoltage + ""}</h4>
         <h4 className='user-data'>{"Price For Current Usage: "}</h4>
       <ToastContainer
               position="top-right"
