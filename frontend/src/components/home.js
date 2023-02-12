@@ -167,7 +167,7 @@ if(output_tot_apperent_power_sum>60){
     price = (16*output_tot_apperent_power_sum);
   }
 }else{
-  if(output_tot_apperent_power_sum>30){
+  if(output_tot_apperent_power_sum>0){
     price = (10*output_tot_apperent_power_sum)+240;
   }else if(output_tot_apperent_power_sum>0){
     price = (8*output_tot_apperent_power_sum)+120;
