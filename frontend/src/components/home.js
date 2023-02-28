@@ -157,6 +157,7 @@ let last_real_day_key = keys[0];
 let current_real_day_value = output_tot_real_power[last_real_day_key];
 
 keys = Object.keys(output_tot_apperent_power);
+
 keys.sort((a, b) => {
   let dateA = new Date(a);
   let dateB = new Date(b);
@@ -164,6 +165,7 @@ keys.sort((a, b) => {
   if (dateA < dateB) return 1;
   return 0;
 });
+
 lastIndex = keys.length - 1;
 let last_app_day_key = keys[0];
 let current_app_day_value = output_tot_apperent_power[last_app_day_key];
@@ -201,31 +203,35 @@ if(output_tot_real_power_sum>60){
   }
 }
 
-  const tot_real_pow_data={
-    labels: Object.keys(output_max_voltage),
-    datasets: [
-      {
-        label: 'Total Real Power',
-        data: Object.values(output_tot_real_power),
-        backgroundColor: 'aqua',
-        borderColor: 'black',
-        borderWidth: 1,
-      },
-    ]
-  };
+const lastTenDates = Object.keys(output_max_voltage).sort().slice(-6);
+const tot_real_pow_data={
+  labels: lastTenDates,
+  datasets: [
+    {
+      label: 'Total Real Power',
+      data: lastTenDates.map(date => output_tot_real_power[date]),
+      backgroundColor: 'aqua',
+      borderColor: 'black',
+      borderWidth: 1,
+    },
+  ]
+};
 
+
+  const latestDates = Object.keys(output_max_voltage).sort().slice(-6);
   const tot_appr_pow_data={
-    labels: Object.keys(output_max_voltage),
+    labels: latestDates,
     datasets: [
       {
         label: 'Total Apparent Power',
-        data: Object.values(output_tot_apperent_power),
+        data: latestDates.map(date => output_tot_apperent_power[date]),
         backgroundColor: 'green',
         borderColor: 'black',
         borderWidth: 1,
       },
     ]
   };
+  
 
   const options={
 
